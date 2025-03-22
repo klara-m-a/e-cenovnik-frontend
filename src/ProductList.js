@@ -7,7 +7,8 @@ const ProductList = () => {
   const [products, setProducts] = useState([]);
 
   const fetchProducts = () => {
-    let url = `http://localhost:5000/products?market=${encodeURIComponent(market)}`;
+    // New URL
+    let url = `https://e-cenovnik-backend-production.up.railway.app/products?market=${encodeURIComponent(market)}`;
     if (location) {
       url += `&location=${encodeURIComponent(location)}`;
     }
