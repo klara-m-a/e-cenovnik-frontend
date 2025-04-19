@@ -1,3 +1,4 @@
+// ProductList.js
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import './App.css';
@@ -6,9 +7,8 @@ const ProductList = () => {
   const { market, location } = useParams();
   const [products, setProducts] = useState([]);
 
-  const fetchProducts = () => {
-    // New URL
-    let url = `https://e-cenovnik-backend-production.up.railway.app/products?market=${encodeURIComponent(market)}`;
+  useEffect(() => {
+    let url = `http://localhost:8080/products?market=${encodeURIComponent(market)}`;
     if (location) {
       url += `&location=${encodeURIComponent(location)}`;
     }
@@ -16,22 +16,18 @@ const ProductList = () => {
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error(err));
-  };
-
-  useEffect(() => {
-    fetchProducts();
   }, [market, location]);
 
   return (
     <div className="container">
-      <h2>Products for: {market}{location ? ` - ${location}` : ""}</h2>
+      <h2>Ценовник за: {market}{location ? ` – ${location}` : ""}</h2>
       {products.length === 0 ? (
         <p>No products available for this {location ? "location" : "market"}.</p>
       ) : (
         <table className="product-table">
           <thead>
             <tr>
-              <th>Name</th>
+              <th>Име</th>
               <th>Measure</th>
               <th>Price</th>
             </tr>

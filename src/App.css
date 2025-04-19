@@ -1,104 +1,268 @@
-/* Global Styles */
-body {
-  margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  background-color: #f9f9f9;
+/* Variables */
+:root {
+  --primary: #0B4251;   /* Dark Teal */
+  --accent: #87BBD7;    /* Light Teal */
+  --highlight: #F2C864; /* Gold */
+  --background: #F8F9FA;
+  --text-dark: #333;
+  --header-height: 70px;
 }
 
-header, footer {
-  background-color: #333;
+/* Reset & Body */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Proxima Nova', sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+}
+
+/* .App as a flex container to keep footer at bottom if content is short */
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+  background-color: #fff;
+  height: var(--header-height);
+  border-bottom: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1000;
+}
+
+.header-container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.site-logo {
+  height: 45px;
+  margin-right: 0.5rem;
+}
+
+.site-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.header-contact {
+  font-size: 1.2rem;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.header-contact {
+  font-size: 1.2rem;
+}
+
+.contact-button {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  background-color: #fff; /* White background */
+  color: var(--primary);  /* Primary color for text */
+  border: 2px solid var(--primary);
+  border-radius: 50px; /* Fully rounded, pill-like */
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem; /* Smaller font size */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.contact-button:hover {
+  background-color: var(--primary);
+  color: #fff;
+}
+
+
+
+/* MAIN - flex: 1 so it expands and pushes footer down if content is short */
+.App main {
+  flex: 1;
+  width: 90%;
+  max-width: 1200px;
+  margin: 1rem auto;
+  padding: 1rem 0;
+}
+
+/* FOOTER: normal (not fixed), but at bottom if content is short due to flex layout */
+.site-footer {
+  background-color: var(--primary);
   color: #fff;
   text-align: center;
   padding: 1rem;
+  margin-top: 2rem;
 }
 
-header h1, footer p {
-  margin: 0;
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-header nav a {
+.footer-container p {
+  margin: 0.25rem 0;
+}
+
+.contact-block {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.site-footer .admin-link {
+  display: inline-block;
+  margin-top: 0.5rem;
   color: #fff;
-  text-decoration: none;
-  margin: 0 0.5rem;
-}
-
-header nav a:hover {
   text-decoration: underline;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 0 1rem;
+/* Market Selector Container */
+.market-selector-container {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* Search Bar */
 .search-bar {
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
-
-.search-bar input {
-  width: 300px;
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-/* Market Selector */
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-ul li {
-  margin: 0.5rem 0;
-}
-
-/* Product Table */
-.product-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 2rem;
-}
-
-.product-table th, .product-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-}
-
-.product-table th {
-  background-color: #f2f2f2;
+  margin-bottom: 1rem;
   text-align: left;
 }
 
-/* Buttons and Links */
-button {
-  padding: 0.5rem 1rem;
-  border: none;
+.search-bar input {
+  width: 100%;
+  max-width: 300px;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
   border-radius: 4px;
-  background-color: #333;
-  color: #fff;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background-color 0.2s;
 }
 
-button:hover {
-  background-color: #555;
+/* Market Cards */
+.market-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
+.market-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 240px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+  padding: 1.5rem;
+}
+
+.market-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.market-card h3 {
+  font-size: 1.3rem;
+  color: var(--primary);
+  margin: 0;
+}
+
+/* Links */
 a {
-  color: #007BFF;
+  color: var(--primary);
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 a:hover {
-  text-decoration: underline;
+  color: var(--accent);
 }
 
-/* Footer */
-footer {
-  margin-top: 2rem;
+/* Product Table (MarketProducts) */
+/* Modern Product Table */
+.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
+
+.product-table th,
+.product-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.product-table th {
+  background-color: var(--background);
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.product-table tbody tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+.product-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.product-table tbody tr:hover {
+  background-color: var(--accent);
+  color: #fff;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+
+.location-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  /* Use gap for spacing between buttons */
+  gap: 1rem; /* Increase as needed, e.g., 1.5rem for more space */
+  justify-content: center; /* optional, if you want them centered horizontally */
+}
+
+.location-buttons button {
+  padding: 0.4rem 1rem;
+  background-color: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-family: 'Proxima Nova', sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.location-buttons button:hover,
+.location-buttons button.active {
+  background-color: var(--primary);
+  color: #fff;
+}
+

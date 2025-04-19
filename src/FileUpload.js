@@ -1,53 +1,57 @@
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import './App.css';
+// src/FileUpload.js
+import React, { useState } from 'react'
+import { useParams, Link } from 'react-router-dom'
+import { Box, Typography, Button } from '@mui/material'
 
 const FileUpload = () => {
-  const { market, location } = useParams();
-  const [file, setFile] = useState(null);
-  const [message, setMessage] = useState('');
+  // const { market, location } = useParams()        // <-- these are slugs
+  const { market: marketSlug, location: locationSlug } = useParams()
+  const [file, setFile] = useState(null)
+  const [message, setMessage] = useState('')
 
-  const handleFileChange = e => {
-    setFile(e.target.files[0]);
-  };
+  const handleFileChange = e => setFile(e.target.files[0])
 
   const handleUpload = async e => {
-    e.preventDefault();
-    if (!file) return;
-    let url = `http://localhost:5000/upload?market=${encodeURIComponent(market)}`;
-    if (location) {
-      url += `&location=${encodeURIComponent(location)}`;
-    }
-    const formData = new FormData();
-    formData.append('file', file);
+    e.preventDefault()
+    if (!file) return
+    // let url = `http://localhost:8080/upload?market=${market}`
+    // if (location) url += `&location=${location}`
+    let url = `http://localhost:8080/upload?market=${encodeURIComponent(marketSlug)}`
+    if (locationSlug) url += `&location=${encodeURIComponent(locationSlug)}`
+
+    const formData = new FormData()
+    formData.append('file', file)
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        body: formData,
-      });
-      const result = await res.json();
-      setMessage(result.message);
-    } catch (error) {
-      console.error(error);
-      setMessage('Upload failed.');
+      const res = await fetch(url, { method: 'POST', body: formData })
+      const result = await res.json()
+      setMessage(result.message)
+    } catch (err) {
+      console.error(err)
+      setMessage('Upload failed.')
     }
-  };
+  }
 
   return (
-    <div className="container">
-      <h2>Upload Products for: {market}{location ? ` - ${location}` : ""}</h2>
+    <Box sx={{ p: 3, maxWidth: 600, mx: 'auto' }}>
+      <Typography variant="h6" gutterBottom>
+        {/* Прикачи за: {market}{location ? ` – ${location}` : ""} */}
+        Прикачи за: {marketSlug}{locationSlug ? ` – ${locationSlug}` : ""}
+      </Typography>
       <form onSubmit={handleUpload}>
-        <input type="file" accept=".xlsx, .xls" onChange={handleFileChange} />
-        <button type="submit">Upload</button>
+        <input
+          type="file"
+          accept=".xlsx,.xls"
+          onChange={handleFileChange}
+          style={{ marginBottom: 16 }}
+        />
+        <Button variant="contained" type="submit">Upload</Button>
       </form>
-      {message && <p>{message}</p>}
-      <div>
-        <Link to={`/market/${market}${location ? "/" + location : ""}`}>
-          Back to Products
-        </Link>
-      </div>
-    </div>
-  );
-};
+      {message && <Typography sx={{ mt: 2 }}>{message}</Typography>}
+      <Box sx={{ mt: 2 }}>
+        <Link to="/admin/dashboard">Назад</Link>
+      </Box>
+    </Box>
+  )
+}
 
-export default FileUpload;
+export default FileUpload

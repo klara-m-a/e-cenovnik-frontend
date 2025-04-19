@@ -1,49 +1,82 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import './App.css';
+// src/AdminLogin.js
+import React, { useState } from 'react'
+import { useNavigate }      from 'react-router-dom'
+import { Box, TextField, Button, Typography } from '@mui/material'
+import { API_BASE }         from './utils/api'  // e.g. '' or '/api'
 
-const AdminLogin = ({ onLogin }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const navigate = useNavigate();
+export default function AdminLogin({ onLogin }) {
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError]       = useState('')
+  const navigate                = useNavigate()
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // For demonstration, use hardcoded credentials: admin/admin
-    if (username === "admin" && password === "admin") {
-      onLogin();
-      navigate("/admin/dashboard");
-    } else {
-      setError("Invalid credentials");
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+
+    try {
+      const res = await fetch(`${API_BASE}/admin/login`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ username, password })
+      })
+
+      if (res.ok) {
+        onLogin()
+        navigate('/admin/dashboard')
+      } else {
+        // pull any error message from the server
+        const { error: msg } = await res.json()
+        setError(msg || 'Невалидни податоци')
+      }
+    } catch (err) {
+      console.error('Login error:', err)
+      setError('Серверска грешка, обиди се повторно')
     }
-  };
+  }
 
   return (
-    <div className="container">
-      <h2>Admin Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <Box
+      sx={{
+        maxWidth: 400,
+        mx:       'auto',
+        mt:       4,
+        p:        3,
+        border:   '1px solid #ddd',
+        borderRadius: 2,
+        backgroundColor: '#fff'
+      }}
+    >
+      <Typography variant="h5" align="center" gutterBottom>
+        Админ Пријава
+      </Typography>
+      {error && (
+        <Typography variant="body2" color="error" align="center" sx={{ mb: 2 }}>
+          {error}
+        </Typography>
+      )}
       <form onSubmit={handleSubmit}>
-        <div>
-          <input 
-            type="text" 
-            placeholder="Username" 
-            value={username}
-            onChange={e => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <input 
-            type="password" 
-            placeholder="Password" 
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
+        <TextField
+          label="Корисничко име"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
+        <TextField
+          label="Лозинка"
+          variant="outlined"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button type="submit" variant="contained" color="primary" fullWidth sx={{ mt: 2 }}>
+          Пријави се
+        </Button>
       </form>
-    </div>
-  );
-};
-
-export default AdminLogin;
+    </Box>
+  )
+}
