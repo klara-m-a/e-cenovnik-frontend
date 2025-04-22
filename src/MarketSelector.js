@@ -30,11 +30,13 @@ const marketsList = [
   {
     name: "Разнопромет",
     slug: "raznopromet",
+    edb: "MK4013007500660",
     locations: [{ name: "Кочани", slug: "kocani" }],
   },
   {
     name: "ВенМаркет",
     slug: "venmarket",
+    edb: "MK4063009500185",
     locations: [
       { name: "ВенМаркет1 - Центар", slug: "centar" },
       { name: "ВенМаркет2 - Градски пазар", slug: "gradski-pazar" },
@@ -45,6 +47,7 @@ const marketsList = [
   {
     name: "Вегоел",
     slug: "vegoel",
+    edb: "MK4013995112360",
     locations: [{ name: "Кочани", slug: "kocani" }],
   },
 ]
@@ -65,23 +68,23 @@ const MarketSelector = () => {
             // Use the slug instead of the full name for better URL compatibility
             const url = `${API_BASE}/products?market=${encodeURIComponent(market.slug)}&location=${encodeURIComponent(location.slug)}`;
             return fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-              // normalize backend response into an array of products
-              const arr = Array.isArray(data)
-                ? data
-                : Array.isArray(data.products)
-                  ? data.products
-                  : [];
-              return {
-                market: market.name,
-                slug: market.slug,
-                location: location.name,
-                locationSlug: location.slug,
-                count: arr.length,
-              };
-            })
-            
+              .then((res) => res.json())
+              .then((data) => {
+                // normalize backend response into an array of products
+                const arr = Array.isArray(data)
+                  ? data
+                  : Array.isArray(data.products)
+                    ? data.products
+                    : [];
+                return {
+                  market: market.name,
+                  slug: market.slug,
+                  location: location.name,
+                  locationSlug: location.slug,
+                  count: arr.length,
+                };
+              })
+
               .catch((err) => {
                 console.error(`Error fetching products for ${market.name} at ${location.name}:`, err)
                 // For testing purposes, let's add some mock data for VenMarket
@@ -137,6 +140,7 @@ const MarketSelector = () => {
           return {
             name: market.name,
             slug: market.slug,
+            edb: market.edb,
             locations: market.locations,
             locationCounts,
             productCount: totalCount,
@@ -181,7 +185,13 @@ const MarketSelector = () => {
     fetchProductCounts()
   }, [])
 
-  const filteredMarkets = markets.filter((market) => market.name.toLowerCase().includes(searchQuery.toLowerCase()))
+  const filteredMarkets = markets.filter((market) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      market.name.toLowerCase().includes(searchLower) ||
+      (market.edb && market.edb.toLowerCase().includes(searchLower))
+    );
+  });
 
   return (
     <Container maxWidth="xl">
@@ -371,12 +381,13 @@ const MarketSelector = () => {
           <Box
             sx={{
               position: "relative",
-              width: { xs: "100%", md: "auto" },
-              minWidth: { md: 300 },
+              width: "100%", // Full width on all devices
+              maxWidth: { sm: 500, md: 600 }, // Larger on tablet/desktop
+              minWidth: 280, // Minimum width for mobile
             }}
           >
             <TextField
-              placeholder="Пребарај продавница..."
+              placeholder="Пребарај по име или ЕДБ..."
               variant="outlined"
               fullWidth
               value={searchQuery}
@@ -384,21 +395,40 @@ const MarketSelector = () => {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <SearchIcon color="action" />
+                    <SearchIcon
+                      fontSize="medium"
+                      sx={{
+                        color: "action.active",
+                        fontSize: { xs: '1.5rem', sm: '1.75rem' } // Larger icon on mobile
+                      }}
+                    />
                   </InputAdornment>
                 ),
+                sx: {
+                  fontSize: { xs: '1rem', sm: '1.1rem' }, // Responsive font size
+                  height: { xs: 48, sm: 56 }, // Slightly shorter on mobile
+                  padding: { xs: '6px 12px', sm: '8px 16px' },
+                  '& input::placeholder': {
+                    fontSize: { xs: '0.9rem', sm: '1rem' }, // Responsive placeholder
+                    opacity: 0.8,
+                  },
+                },
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 2,
+                  borderRadius: 3, // More rounded corners
                   backgroundColor: "background.paper",
                   "&:hover fieldset": {
                     borderColor: "primary.main",
+                    borderWidth: 2,
                   },
                   "&.Mui-focused fieldset": {
                     borderColor: "primary.main",
+                    borderWidth: 2,
                   },
                 },
+                // Remove the default width constraint
+                width: '100%',
               }}
             />
           </Box>
