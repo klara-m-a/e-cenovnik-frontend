@@ -2,6 +2,7 @@
 import React, { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Box, Typography, Button } from '@mui/material'
+import { API_BASE } from './utils/api';
 
 const FileUpload = () => {
   // const { market, location } = useParams()        // <-- these are slugs
@@ -16,7 +17,7 @@ const FileUpload = () => {
     if (!file) return
     // let url = `http://localhost:8080/upload?market=${market}`
     // if (location) url += `&location=${location}`
-    let url = `http://localhost:8080/upload?market=${encodeURIComponent(marketSlug)}`
+    let url = `${API_BASE}/upload?market=${encodeURIComponent(marketSlug)}`;
     if (locationSlug) url += `&location=${encodeURIComponent(locationSlug)}`
 
     const formData = new FormData()
