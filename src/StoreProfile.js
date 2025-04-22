@@ -68,7 +68,7 @@ const marketDetails = {
     edb: "MK4013995112360",
     address: "9-ти Мај 44",
     place: "Кочани",
-    phone: "033/275-773",
+    phone: "076/477-680",
     email: "t.goko@yahoo.com",
     description:
       "Вегоел е продавница за играчки, бебешка и детска опрема, домакинство, апарати за домакинство, сувенири.",
@@ -80,6 +80,66 @@ const marketDetails = {
       },
     },
     logo: "/logos/vegoel-logo.png",
+  },
+  pepisan: {
+    name: "Пепи Сан",
+    slug: "pepisan",
+    company: "ПЕПИ САН-АНДРЕЈ Д.О.О.Е.Л. МАКЕДОНСКА КАМЕНИЦА",
+    edb: "MK4063010500342",
+    address: "Осоговска 2/-",
+    place: "Македонска Каменица",
+    phone: "071/544-408",
+    email: "altrejd@yahoo.com",
+    description:
+      "Трговија на мало во неспецијализирани продавници претежно со храна пијалаци и тутун",
+    locations: {
+      kamenica: {
+        name: "Македонска Каменица",
+        mapUrl:
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d741.0061147597312!2d22.590503469657904!3d42.02120769450457!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x13558715c2b6ac65%3A0xea82bc335ce04ece!2z0J7RgdC-0LPQvtCy0YHQutCwIDIsIE1ha2Vkb25za2EgS2FtZW5pdHNh!5e0!3m2!1sen!2smk!4v1745328410672!5m2!1sen!2smk",
+      },
+    },
+    logo: "",
+  },
+  pamist: {
+    name: "Памист",
+    slug: "pamist",
+    company: "ПАМИСТ 2015 Д.О.О.Е.Л. ДЕЛЧЕВО",
+    edb: "MK4009015504910",
+    address: "ПЕРЕ ТОШЕВ 41",
+    place: "Делчево",
+    phone: "077/854-890",
+    email: "ivica.micevski@t-home.mk",
+    description:
+      "Трговија на мало во неспецијализирани продавници претежно со храна пијалаци и тутун.",
+    locations: {
+      delcevo: {
+        name: "Делчево",
+        mapUrl:
+          "https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d1939.703794933368!2d22.874221836697853!3d41.98685208575142!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2smk!4v1745329916813!5m2!1sen!2smk",
+      },
+    },
+    logo: "/logos/pamist-logo.png",
+  },
+  'simpli-trejd': {
+    name: "Симпли Трејд",
+    slug: "simpli-trejd",
+    company: "СИМПЛИ ТРЕЈД Д.О.О.Е.Л. МАКЕДОНСКА КАМЕНИЦА",
+    edb: "MK4063015501320",
+    address: "14-ТИ ЈУНИ 5",
+    place: "Македонска Каменица",
+    phone: "071/820-540",
+    email: "perojule@yahoo.com",
+    description:
+      "Трговија на мало во неспецијализирани продавници претежно со храна пијалаци и тутун.",
+    locations: {
+      kamenica: {
+        name: "Македонска Каменица",
+        mapUrl:
+          "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2963.768641538605!2d22.584703676489696!3d42.02669535609677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1355873c57788e37%3A0xd6ac49792d1df2a2!2sR1210%2C%20Makedonska%20Kamenitsa!5e0!3m2!1sen!2smk!4v1745329538977!5m2!1sen!2smk",
+      },
+    },
+    logo: "/logos/simpli-trejd-logo.png",
   },
 }
 
@@ -194,7 +254,7 @@ const StoreProfile = () => {
 
         <Divider sx={{ my: 2 }} />
 
-        <Grid container spacing={3}>
+        <Grid container spacing={3} sx={{display: "block"}}>
           <Grid item xs={12} md={6}>
             <Typography variant="h6" sx={{ mb: 2 }}>
               Информации
@@ -234,7 +294,7 @@ const StoreProfile = () => {
           </Grid>
 
           <Grid item xs={12} md={12}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
+            <Typography variant="h6" sx={{ mb: 2, pt: 5 }}>
               Опис
             </Typography>
             <Typography variant="body1" color="text.secondary">

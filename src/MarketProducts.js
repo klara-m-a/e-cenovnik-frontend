@@ -54,6 +54,21 @@ const markets = [
     slug: "vegoel",
     locations: [{ name: "Кочани", slug: "kocani" }],
   },
+  {
+    name: "Пепи Сан",
+    slug: "pepisan",
+    locations: [{ name: "Македонска Каменица", slug: "kamenica" }]
+  },
+  {
+    name: "Памист",
+    slug: "pamist",
+    locations: [{ name: "Делчево", slug: "delcevo" }]
+  },
+  {
+    name: "Симпли Трејд",
+    slug: "simpli-trejd",
+    locations: [{ name: "Македонска Каменица", slug: "kamenica" }]
+  }
 ]
 
 const PAGE_SIZE = 20

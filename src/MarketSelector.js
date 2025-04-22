@@ -16,6 +16,7 @@ import {
   Divider,
   Button,
   Paper,
+  IconButton,
 } from "@mui/material"
 import { Link } from "react-router-dom"
 import SearchIcon from "@mui/icons-material/Search"
@@ -24,6 +25,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn"
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket"
 import AddBusinessIcon from "@mui/icons-material/AddBusiness"
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward"
+import CloseIcon from '@mui/icons-material/Close';
 
 // Define markets with Latin slugs for URLs and locations with Latin slugs
 const marketsList = [
@@ -50,6 +52,24 @@ const marketsList = [
     edb: "MK4013995112360",
     locations: [{ name: "Кочани", slug: "kocani" }],
   },
+  {
+    name: "Пепи Сан",
+    slug: "pepisan",
+    edb: "MK4063010500342",
+    locations: [{ name: "Македонска Каменица", slug: "kamenica" }]
+  },
+  {
+    name: "Памист",
+    slug: "pamist",
+    edb: "MK4009015504910",
+    locations: [{ name: "Делчево", slug: "delcevo" }]
+  },
+  {
+    name: "Симпли Трејд",
+    slug: "simpli-trejd",
+    edb: "MK4063015501320",
+    locations: [{ name: "Македонска Каменица", slug: "kamenica" }]
+  }
 ]
 
 const MarketSelector = () => {
@@ -189,7 +209,8 @@ const MarketSelector = () => {
     const searchLower = searchQuery.toLowerCase();
     return (
       market.name.toLowerCase().includes(searchLower) ||
-      (market.edb && market.edb.toLowerCase().includes(searchLower))
+      (market.edb && market.edb.toLowerCase().includes(searchLower)) ||
+      (market.slug && market.slug.toLowerCase().includes(searchLower))
     );
   });
 
@@ -381,9 +402,8 @@ const MarketSelector = () => {
           <Box
             sx={{
               position: "relative",
-              width: "100%", // Full width on all devices
-              maxWidth: { sm: 500, md: 600 }, // Larger on tablet/desktop
-              minWidth: 280, // Minimum width for mobile
+              width: "100%",
+              maxWidth: { sm: 500, md: 600 },
             }}
           >
             <TextField
@@ -396,27 +416,44 @@ const MarketSelector = () => {
                 startAdornment: (
                   <InputAdornment position="start">
                     <SearchIcon
-                      fontSize="medium"
                       sx={{
                         color: "action.active",
-                        fontSize: { xs: '1.5rem', sm: '1.75rem' } // Larger icon on mobile
+                        fontSize: { xs: '1.5rem', sm: '1.75rem' }
                       }}
                     />
                   </InputAdornment>
                 ),
+                endAdornment: searchQuery && (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="Clear search"
+                      onClick={() => setSearchQuery('')}
+                      edge="end"
+                      sx={{
+                        color: 'text.secondary',
+                        '&:hover': {
+                          color: 'text.primary',
+                          backgroundColor: 'rgba(0, 0, 0, 0.04)'
+                        }
+                      }}
+                    >
+                      <CloseIcon fontSize="small" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
                 sx: {
-                  fontSize: { xs: '1rem', sm: '1.1rem' }, // Responsive font size
-                  height: { xs: 48, sm: 56 }, // Slightly shorter on mobile
+                  fontSize: { xs: '1rem', sm: '1.1rem' },
+                  height: { xs: 48, sm: 56 },
                   padding: { xs: '6px 12px', sm: '8px 16px' },
                   '& input::placeholder': {
-                    fontSize: { xs: '0.9rem', sm: '1rem' }, // Responsive placeholder
+                    fontSize: { xs: '0.9rem', sm: '1rem' },
                     opacity: 0.8,
                   },
                 },
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
-                  borderRadius: 3, // More rounded corners
+                  borderRadius: 3,
                   backgroundColor: "background.paper",
                   "&:hover fieldset": {
                     borderColor: "primary.main",
@@ -427,7 +464,6 @@ const MarketSelector = () => {
                     borderWidth: 2,
                   },
                 },
-                // Remove the default width constraint
                 width: '100%',
               }}
             />
